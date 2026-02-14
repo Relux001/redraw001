@@ -1,220 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset=UTF-8">
-    <link rel="icon" type="png" href="Drawing.png">
-    <style>
-    body{
-        background:gray;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="Drawing.png">
+  <style>
+    body {
+      background: gray;
+      margin: 0;
+      font-family: sans-serif;
     }
-    #can{
-        display:flex;
-        justify-content:center;
+    #can {
+      display: flex;
+      justify-content: center;
+      margin: 10px;
     }
-    canvas{
-        border: 2px solid black;
-        background:white;
+    canvas {
+      border: 2px solid black;
+      background: white;
+      width: 100%;
+      max-width: 600px;
+      height: auto;
     }
-    .centrirov{
-        text-align:center;
+    .centrirov {
+      text-align: center;
+      margin: 10px 0;
     }
-    .colorss{
-        width:20px;
-        height:20px;
-        cursor:pointer;
+    button {
+      margin: 5px;
+      border: none;
     }
-    #colors{
-        text-align:center;
+    .colorss {
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      border-radius: 4px;
     }
-    #c1{
-        background:red;
+    #colors {
+      text-align: center;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
     }
-    #c2{
-        background:blue;
+    .widthh {
+      text-align: center;
+      background: black;
+      border-radius: 50%;
+      cursor: pointer;
+      margin: 5px;
     }
-    #c3{
-        background:green;
-    }
-    #c4{
-        background:yellowgreen;
-    }
-    #c5{
-        background:pink;
-    }
-    #c6{
-        background:black;
-    }
-    #c7{
-        background:yellow;
-    }
-    #c8{
-        background:white;
-    }
-    #c9{
-        background: brown;
-    }
-    .widthh{
-        text-align:center;
-        background:black;
-        border-radius:50%;
-        cursor: pointer;
-    }
-    #w0{
-        height: 15px;
-        width: 10px;
-    }
-    #w1{
-        height: 20px;
-        width: 20px;
-    }
-    #w2{
-        height: 25px;
-        width: 25px;
-    }
-    #w3{
-        height:30px;
-        width: 30px;
-    }
-    #w4{
-        height: 40px;
-        width: 40px;
-    }
-    #w5{
-        width: 50px;
-        height: 50px;
-    }
-    #w6{
-        height: 60px;
-        width: 60px;
-    }
-    </style>
+    #w0 { height: 15px; width: 15px; }
+    #w1 { height: 20px; width: 20px; }
+    #w2 { height: 25px; width: 25px; }
+    #w3 { height: 30px; width: 30px; }
+    #w4 { height: 40px; width: 40px; }
+    #w5 { height: 50px; width: 50px; }
+    #w6 { height: 60px; width: 60px; }
+  </style>
 </head>
 <body>
-   <div id="can">
-       <canvas id="canva" width="600" height="300"></canvas>
-   </div>
-   <div class="centrirov">
-       <button id="downl">Download</button>
-   </div>
-   <br>
-   <div id="colors">
-       <button id="c1" class="colorss"></button>
-       <button id="c2" class="colorss"></button>
-       <button id="c3" class="colorss"></button>
-       <button id="c4" class="colorss"></button>
-       <button id="c5" class="colorss"></button>
-       <button id="c6" class="colorss"></button>
-       <button id="c7" class="colorss"></button>
-       <button id="c8" class="colorss"></button>
-       <button id="c9" class="colorss"></button>
-       <br>
-       <br>
-       <button id="w0" class="widthh"></button>
-       <button id="w1" class="widthh"></button>
-       <button id="w2" class="widthh"></button>
-       <button id="w3" class="widthh"></button>
-       <button id="w4" class="widthh"></button>
-       <button id="w5" class="widthh"></button>
-       <button id="w6" class="widthh"></button>
-   </div>
+  <div id="can">
+    <canvas id="canva" width="600" height="300"></canvas>
+  </div>
+  <div class="centrirov">
+    <button id="downl">Download</button>
+  </div>
+  <div id="colors">
+    <button id="c1" class="colorss" style="background:red;"></button>
+    <button id="c2" class="colorss" style="background:blue;"></button>
+    <button id="c3" class="colorss" style="background:green;"></button>
+    <button id="c4" class="colorss" style="background:yellowgreen;"></button>
+    <button id="c5" class="colorss" style="background:pink;"></button>
+    <button id="c6" class="colorss" style="background:black;"></button>
+    <button id="c7" class="colorss" style="background:yellow;"></button>
+    <button id="c8" class="colorss" style="background:white; border:1px solid #ccc;"></button>
+    <button id="c9" class="colorss" style="background:brown;"></button>
+  </div>
+  <div id="colors">
+    <button id="w0" class="widthh"></button>
+    <button id="w1" class="widthh"></button>
+    <button id="w2" class="widthh"></button>
+    <button id="w3" class="widthh"></button>
+    <button id="w4" class="widthh"></button>
+    <button id="w5" class="widthh"></button>
+    <button id="w6" class="widthh"></button>
+  </div>
 
-
-
-
-
-    <script>
+  <script>
     const canvas = document.getElementById("canva");
     const downloadBtn = document.getElementById("downl");
-    downloadBtn.addEventListener("click" , () => {
-    const dataURL = canvas.toDataURL("png");
-    const link = document.createElement("a");
-    link.href = dataURL;
-    link.download = "Drawing_Relux001.png";
-    link.click();
+    downloadBtn.addEventListener("click", () => {
+      const dataURL = canvas.toDataURL("image/png");
+      const link = document.createElement("a");
+      link.href = dataURL;
+      link.download = "Drawing_Relux001.png";
+      link.click();
     });
+
     let city = canvas.getContext("2d");
     let draw = false;
-    canvas.addEventListener("mousedown" , down);
-    function down(){
-    draw = true;
+
+    canvas.addEventListener("mousedown", () => draw = true);
+    canvas.addEventListener("mouseup", () => {
+      draw = false;
+      city.beginPath();
+    });
+    canvas.addEventListener("mousemove", move);
+
+    function move(event) {
+      if (!draw) return;
+      city.lineCap = "round";
+      city.lineTo(event.offsetX, event.offsetY);
+      city.moveTo(event.offsetX, event.offsetY);
+      city.stroke();
     }
-    canvas.addEventListener("mouseup" , up);
-    function up(){
-    draw = false;
-    city.beginPath();
-    }
-    canvas.addEventListener("mousemove" , move);
-    function move(event){
-    if (draw===false) return;
-    city.lineCap = "round";
-    city.lineTo(event.offsetX , event.offsetY);
-    city.moveTo(event.offsetX , event.offsetY);
-    city.stroke();
-    }
-    
 
-    c1.addEventListener("click" , () => {
-       city.strokeStyle = "red";
-    });
-    
-    c2.addEventListener("click" , () => {
-       city.strokeStyle = "blue";
-    });
+    c1.onclick = () => city.strokeStyle = "red";
+    c2.onclick = () => city.strokeStyle = "blue";
+    c3.onclick = () => city.strokeStyle = "green";
+    c4.onclick = () => city.strokeStyle = "yellowgreen";
+    c5.onclick = () => city.strokeStyle = "pink";
+    c6.onclick = () => city.strokeStyle = "black";
+    c7.onclick = () => city.strokeStyle = "yellow";
+    c8.onclick = () => city.strokeStyle = "white";
+    c9.onclick = () => city.strokeStyle = "brown";
 
-    c3.addEventListener("click" , () => {
-       city.strokeStyle = "green";
-    });
-   
-    c4.addEventListener("click" , () => {
-       city.strokeStyle = "yellowgreen";
-    });
-
-    c5.addEventListener("click" , () => {
-       city.strokeStyle = "pink";
-    });
-
-    c6.addEventListener("click" , () => {
-       city.strokeStyle = "black";
-    });
-
-    c7.addEventListener("click" , () => {
-       city.strokeStyle = "yellow";
-    });
-
-    c8.addEventListener("click" , () => {
-    city.strokeStyle = "white";
-    });
-
-    c9.addEventListener("click" , () => {
-       city.strokeStyle = "brown";
-    });
-
-    w0.addEventListener("click" , () => {
-       city.lineWidth = 3;
-    });
-    w1.addEventListener("click" , () => {
-       city.lineWidth = 4;
-    });
-
-    w2.addEventListener("click" , () => {
-       city.lineWidth = 5;
-    });
-
-    w3.addEventListener("click" , () => {
-       city.lineWidth = 6;
-    });
-
-    w4.addEventListener("click" , () => {
-       city.lineWidth = 7;
-    });
-
-    w5.addEventListener("click" , () => {
-       city.lineWidth = 50;
-    });
-
-    w6.addEventListener("click" , () => {
-       city.lineWidth = 100;
-    });
-    </script>
-    </body>
-    </html>
+    w0.onclick = () => city.lineWidth = 3;
+    w1.onclick = () => city.lineWidth = 4;
+    w2.onclick = () => city.lineWidth = 5;
+    w3.onclick = () => city.lineWidth = 6;
+    w4.onclick = () => city.lineWidth = 7;
+    w5.onclick = () => city.lineWidth = 50;
+    w6.onclick = () => city.lineWidth = 100;
+  </script>
+</body>
+</html>
